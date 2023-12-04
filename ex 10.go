@@ -5,19 +5,40 @@ import (
 	"strings"
 )
 
+func areAnagrams(str1, str2 string) bool {
+	str1 = strings.ReplaceAll(strings.ToLower(str1), " ", "")
+	str2 = strings.ReplaceAll(strings.ToLower(str2), " ", "")
+
+	if len(str1) != len(str2) {
+		return false
+	}
+
+	counts := make(map[rune]int)
+
+	for _, char := range str1 {
+		counts[char]++
+	}
+
+	for _, char := range str2 {
+		counts[char]--
+		if counts[char] < 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
 func main() {
-	var input, oldChar, newChar string
+	var str1, str2 string
+	fmt.Print("Digite a primeira string: ")
+	fmt.Scanln(&str1)
+	fmt.Print("Digite a segunda string: ")
+	fmt.Scanln(&str2)
 
-	fmt.Print("Digite uma string: ")
-	fmt.Scanln(&input)
-
-	fmt.Print("Digite a letra a ser substituída: ")
-	fmt.Scanln(&oldChar)
-
-	fmt.Print("Digite a nova letra: ")
-	fmt.Scanln(&newChar)
-
-	resultado := strings.ReplaceAll(input, oldChar, newChar)
-
-	fmt.Println("Resultado:", resultado)
+	if areAnagrams(str1, str2) {
+		fmt.Println("Anagramas!")
+	} else {
+		fmt.Println("Não são anagramas.")
+	}
 }
